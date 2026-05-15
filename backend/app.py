@@ -30,11 +30,14 @@ def live_decision(commodity: str, state: str, limit: int = 10):
     try:
         commodity = commodity.strip().title()
         state = state.strip().title()
-
+        print("API called")
         # Try state-level data first
+        print("Fetching mandi prices...")
         prices = fetch_prices(commodity, state=state, limit=limit)
+        print("Fetched prices successfully")
+        print(prices)
         data_source = "state"
-
+        print("Fetched prices")
         # If no state data → fallback to national
         if not prices:
             prices = fetch_prices(commodity, state=None, limit=limit)
@@ -58,10 +61,11 @@ def live_decision(commodity: str, state: str, limit: int = 10):
                     "explanation": "No valid market data available."
                 }
             }
-
+        print("Running prediction")
+        print("Running AI decision engine...")
         # Run AI decision engine
         result = make_decision(prices)
-
+        print("AI decision complete")
         return {
             "commodity": commodity,
             "state": state,
