@@ -4,6 +4,10 @@ AI-powered agricultural intelligence and forecasting platform built using FastAP
 
 ---
 
+## Live Demo
+
+https://agrisenseai-five.vercel.app
+
 # 🚀 Overview
 
 AgriSenseAI helps analyze agricultural market trends using AI-driven forecasting and risk analysis techniques.
