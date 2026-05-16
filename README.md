@@ -87,17 +87,42 @@ Forecasting    Risk Analysis
 
 ---
 
-# 📂 Project Structure
+# 📁 Project Structure
 
-```text
-backend/
+```bash
+AgriSenseAI/
 │
-├── app.py
-├── decision_engine.py
-├── forecast_model.py
-├── mandi_api.py
-├── risk_model.py
-├── requirements.txt
+├── assets/
+│   ├── swagger.png
+│   ├── dashboard.png
+│   ├── analysis.png
+│   └── chart.png
+│
+├── backend/
+│   ├── app.py
+│   ├── decision_engine.py
+│   ├── forecast_model.py
+│   ├── mandi_api.py
+│   ├── risk_model.py
+│   ├── requirements.txt
+│   └── Procfile
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   ├── index.css
+│   │   └── assets/
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   └── index.html
+│
+├── ml/
+│   └── notebooks/
+│
+├── .gitignore
 └── README.md
 ```
 
@@ -234,6 +259,12 @@ python -m uvicorn app:app --reload
 
 # 📷 Swagger API Documentation
 ![Swagger Docs](assets/swagger.png)
+
+# 📷 Frontend Dashboard
+![Frontend](assets/dashboard.png)
+
+# 📷 Swagger API Documentation
+![Frontend](assets/chart-analysis.png)
 
 # 👩‍💻 Author
 
