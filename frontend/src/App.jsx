@@ -22,43 +22,35 @@ function App() {
   }, []);
 
   const fetchData = async () => {
+    try {
+      setLoading(true);
 
-  try {
+      const response = await axios.get(
+        `https://agrisenseai-9slq.onrender.com/live-decision?commodity=${commodity}&state=${state}&limit=10`,
+        {
+          timeout: 8000,
+        },
+      );
 
-    setLoading(true)
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
 
-    const response = await axios.get(
-      `http://127.0.0.1:8000/live-decision?commodity=${commodity}&state=${state}&limit=10`,
-      {
-        timeout: 8000
-      }
-    )
-
-    setData(response.data)
-
-  } catch (error) {
-
-    console.log(error)
-
-    setData({
-      commodity: commodity,
-      decision_result: {
-        decision: "UNAVAILABLE",
-        risk_level: "LOW",
-        confidence: 0,
-        explanation:
-          "Live government mandi API is currently unavailable. Demo AI prediction displayed safely."
-      },
-      prices_used: [2200, 2300, 2400, 2500]
-    })
-
-  } finally {
-
-    setLoading(false)
-
-  }
-
-}
+      setData({
+        commodity: commodity,
+        decision_result: {
+          decision: "UNAVAILABLE",
+          risk_level: "LOW",
+          confidence: 0,
+          explanation:
+            "Live government mandi API is currently unavailable. Demo AI prediction displayed safely.",
+        },
+        prices_used: [2200, 2300, 2400, 2500],
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   const chartData =
     data?.prices_used?.map((price, index) => ({
       day: `Day ${index + 1}`,
@@ -104,18 +96,18 @@ function App() {
           />
 
           <button
-  onClick={fetchData}
-  className="bg-green-500 hover:bg-green-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 rounded-xl font-bold"
->
-  {loading ? (
-    <div className="flex items-center justify-center gap-2">
-      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-      Analyzing...
-    </div>
-  ) : (
-    "Analyze Market"
-  )}
-</button>
+            onClick={fetchData}
+            className="bg-green-500 hover:bg-green-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-green-500/20 rounded-xl font-bold"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Analyzing...
+              </div>
+            ) : (
+              "Analyze Market"
+            )}
+          </button>
         </div>
       </div>
 
@@ -190,12 +182,10 @@ function App() {
           {data?.decision_result?.explanation || "Fetching AI insights..."}
         </p>
       </div>
-        <div className="mt-16 text-center text-gray-500 text-sm">
-  Built with FastAPI, React, TailwindCSS & AI Forecasting Models 🚀
-</div>
+      <div className="mt-16 text-center text-gray-500 text-sm">
+        Built with FastAPI, React, TailwindCSS & AI Forecasting Models 🚀
+      </div>
     </div>
-
-  
   );
 }
 
