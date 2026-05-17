@@ -8,6 +8,7 @@ from decision_engine import make_decision
 app = FastAPI(
     title="AgriSenseAI - Live Mandi Decision API"
 )
+from fastapi.middleware.cors import CORSMiddleware
 
 # Enable frontend access
 app.add_middleware(
