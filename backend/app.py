@@ -12,13 +12,14 @@ app = FastAPI(
 # Enable frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://agrisenseai-five.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 @app.get("/")
 def home():
 
