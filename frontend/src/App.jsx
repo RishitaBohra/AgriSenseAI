@@ -22,35 +22,40 @@ function App() {
   }, []);
 
   const fetchData = async () => {
-    try {
-      setLoading(true);
 
-      const response = await axios.get(
-        `https://agrisenseai-9slq.onrender.com/live-decision?commodity=${commodity}&state=${state}&limit=10`,
-        {
-          timeout: 8000,
-        },
-      );
+  try {
 
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
+    setLoading(true)
 
-      setData({
-        commodity: commodity,
-        decision_result: {
-          decision: "UNAVAILABLE",
-          risk_level: "LOW",
-          confidence: 0,
-          explanation:
-            "Live government mandi API is currently unavailable. Demo AI prediction displayed safely.",
-        },
-        prices_used: [2200, 2300, 2400, 2500],
-      });
-    } finally {
-      setLoading(false);
+    console.log("Calling API...")
+
+    const response = await axios.get(
+      `https://agrisenseai-9slq.onrender.com/live-decision?commodity=${commodity}&state=${state}&limit=10`
+    )
+
+    console.log("API RESPONSE:", response.data)
+
+    setData(response.data)
+
+  } catch (error) {
+
+    console.log("FULL ERROR:", error)
+
+    if (error.response) {
+      console.log("Response Error:", error.response.data)
     }
-  };
+
+    if (error.request) {
+      console.log("Request Error:", error.request)
+    }
+
+  } finally {
+
+    setLoading(false)
+
+  }
+
+}
   const chartData =
     data?.prices_used?.map((price, index) => ({
       day: `Day ${index + 1}`,
