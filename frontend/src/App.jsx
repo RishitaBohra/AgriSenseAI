@@ -22,21 +22,43 @@ function App() {
   }, []);
 
   const fetchData = async () => {
-    try {
-      setLoading(true);
 
-      const response = await axios.get(
-        `http://127.0.0.1:8000/live-decision?commodity=${commodity}&state=${state}&limit=10`,
-      );
+  try {
 
-      setData(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setLoading(true)
 
+    const response = await axios.get(
+      `http://127.0.0.1:8000/live-decision?commodity=${commodity}&state=${state}&limit=10`,
+      {
+        timeout: 8000
+      }
+    )
+
+    setData(response.data)
+
+  } catch (error) {
+
+    console.log(error)
+
+    setData({
+      commodity: commodity,
+      decision_result: {
+        decision: "UNAVAILABLE",
+        risk_level: "LOW",
+        confidence: 0,
+        explanation:
+          "Live government mandi API is currently unavailable. Demo AI prediction displayed safely."
+      },
+      prices_used: [2200, 2300, 2400, 2500]
+    })
+
+  } finally {
+
+    setLoading(false)
+
+  }
+
+}
   const chartData =
     data?.prices_used?.map((price, index) => ({
       day: `Day ${index + 1}`,
