@@ -9,19 +9,49 @@ def determine_risk_level(risk_score):
         return "MEDIUM"
     return "HIGH"
 
-
 def determine_decision(predicted_change, risk_level):
-    if risk_level == "HIGH" and predicted_change < -50:
-        return "STRONG SELL"
-    elif predicted_change < 0:
-        return "SELL"
-    elif predicted_change > 50:
-        return "STRONG BUY"
-    elif predicted_change > 0:
-        return "BUY"
-    else:
-        return "HOLD"
 
+    # High Risk Market
+    if risk_level == "HIGH":
+
+        if predicted_change < -50:
+            return "STRONG SELL"
+
+        elif predicted_change < 0:
+            return "SELL"
+
+        elif predicted_change > 50:
+            return "BUY"
+
+        else:
+            return "HOLD"
+
+    # Medium Risk Market
+    elif risk_level == "MEDIUM":
+
+        if predicted_change < -50:
+            return "SELL"
+
+        elif predicted_change > 50:
+            return "BUY"
+
+        else:
+            return "HOLD"
+
+    # Low Risk Market
+    else:
+
+        if predicted_change < -50:
+            return "SELL"
+
+        elif predicted_change > 50:
+            return "STRONG BUY"
+
+        elif predicted_change > 0:
+            return "BUY"
+
+        else:
+            return "HOLD"
 def make_decision(prices):
     try:
         # Safety check
